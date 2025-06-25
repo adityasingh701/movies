@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aditya Singh - Premium Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --text: #111;
+      --card: #fff;
+      --accent: #6f42c1;
+    }
+    body.dark {
+      --bg: #101010;
+      --text: #f5f5f5;
+      --card: #1c1c1c;
+      --accent: #bb86fc;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Unbounded', sans-serif;
+      transition: 0.3s ease all;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      background: var(--card);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .left, .right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .brand {
+      font-weight: bold;
+      font-size: 1.2em;
+      color: var(--accent);
+    }
+
+    .icon-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2em;
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 20px auto;
+      padding: 20px;
+    }
+
+    .ad-box, .link-button {
+      background: var(--card);
+      padding: 16px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .link-button a {
+      display: inline-block;
+      text-decoration: none;
+      background: var(--accent);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 1em;
+      transition: 0.3s ease;
+    }
+
+    .link-button a:hover {
+      background: darkviolet;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="left">
+      <button class="icon-btn" onclick="location.href='about.html'">☰ About Us</button>
+    </div>
+    <div class="brand">Aditya Singh ⭐</div>
+    <div class="right">
+      <button class="icon-btn" onclick="toggleDark()">🌗</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="ad-box">🔳 Space for Banner Ad</div>
+
+    <div class="link-button">
+      <a href="#">Link Button (abcd)</a>
+    </div>
+
+    <div class="link-button">
+      <a href="#">Link Button (xyz)</a>
+    </div>
+
+    <div class="ad-box">📦 Space for Bottom Ad</div>
+  </div>
+
+  <footer>
+    © All rights reserved...
+  </footer>
+
+  <script>
+    function toggleDark() {
+      document.body.classList.toggle('dark');
+    }
+  </script>
+</body>
+</html>
