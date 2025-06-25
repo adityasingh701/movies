@@ -27,10 +27,23 @@
     }
     header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
+      justify-content: space-between;
+      padding: 16px;
+      background: var(--card);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .left, .right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .brand {
+      font-weight: bold;
+      font-size: 1.2em;
+      color: var(--accent);
     }
     .toggle-btn {
       background: none;
@@ -90,8 +103,12 @@
 <body>
 
   <header>
-    <div>
-     <button class="icon-btn" onclick="location.href='about.html'">🎞️ </button> <h2>⭐ Aditya Singh ⭐</h2> <button class="toggle-btn" onclick="document.body.classList.toggle('dark')">🌗</button>
+    <div class="left">
+      <button class="icon-btn" onclick="location.href='about.html'">🎞️ </button>
+    </div>
+    <div class="brand">⭐ Aditya Singh ⭐</div>
+    <div class="right">
+      <button class="icon-btn" onclick="toggleDark()">🌗</button>
     </div>
   </header>
 
