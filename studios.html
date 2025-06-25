@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>All Movie Studios</title>
+  <style>
+    :root {
+      --bg: #fdfdfd;
+      --text: #111;
+      --card: #fff;
+      --accent: #0077c8;
+    }
+    body.dark {
+      --bg: #101820;
+      --text: #f0f0f0;
+      --card: #1e1e1e;
+      --accent: #66ccff;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: 0.3s ease all;
+      padding: 20px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .toggle-btn {
+      background: none;
+      border: 1px solid var(--text);
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      color: var(--text);
+    }
+    .toggle-btn:hover {
+      background: var(--text);
+      color: var(--bg);
+    }
+    #searchInput {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin: 20px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background-color: var(--card);
+      color: var(--text);
+    }
+    .studio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .studio-card {
+      background: var(--card);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      transition: 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .studio-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+    .studio-card img {
+      max-width: 100px;
+      height: auto;
+      margin-bottom: 10px;
+    }
+    .studio-card h3 {
+      margin: 10px 0 5px;
+      font-size: 18px;
+    }
+    .studio-card a {
+      text-decoration: none;
+      color: var(--accent);
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h2>🎞 All Movie Studios</h2>
+    <button class="toggle-btn" onclick="document.body.classList.toggle('dark')">🌗 Toggle Dark Mode</button>
+  </header>
+
+  <input type="text" id="searchInput" placeholder="Search Studios...">
+
+  <div class="studio-grid" id="studioGrid">
+    <div class="studio-card">
+      <img src="https://1000logos.net/wp-content/uploads/2017/05/Marvel-Logo-768x432.png" alt="Marvel Studios">
+      <h3>Marvel Studios</h3>
+      <a href="marvel.html">View All Movies</a>
+    </div>
+    <div class="studio-card">
+      <img src="https://1000logos.net/wp-content/uploads/2017/06/Warner-Bros-Logo-1993.png" alt="Warner Bros">
+      <h3>Warner Bros</h3>
+      <a href="warnerbros.html">View All Movies</a>
+    </div>
+    <div class="studio-card">
+      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/3/33/Yash_Raj_Films_Logo.svg/1200px-Yash_Raj_Films_Logo.svg.png" alt="Yash Raj Films">
+      <h3>Yash Raj Films</h3>
+      <a href="yrf.html">View All Movies</a>
+    </div>
+    <div class="studio-card">
+      <img src="https://upload.wikimedia.org/wikipedia/en/7/7e/Dharma_Productions_Logo.png" alt="Dharma Productions">
+      <h3>Dharma Productions</h3>
+      <a href="dharma.html">View All Movies</a>
+    </div>
+    <div class="studio-card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Paramount_Pictures_Logo.svg" alt="Paramount Pictures">
+      <h3>Paramount Pictures</h3>
+      <a href="paramount.html">View All Movies</a>
+    </div>
+    <div class="studio-card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Universal_Pictures_new_logo.svg" alt="Universal Pictures">
+      <h3>Universal Pictures</h3>
+      <a href="universal.html">View All Movies</a>
+    </div>
+    <div class="studio-card">
+      <img src="https://upload.wikimedia.org/wikipedia/en/7/7b/20th_Century_Studios_logo.svg" alt="20th Century Studios">
+      <h3>20th Century Studios</h3>
+      <a href="twentieth.html">View All Movies</a>
+    </div>
+    <div class="studio-card">
+      <img src="https://upload.wikimedia.org/wikipedia/en/7/74/T-Series_logo.svg" alt="T-Series">
+      <h3>T-Series Films</h3>
+      <a href="tseries.html">View All Movies</a>
+    </div>
+    <div class="studio-card">
+      <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Aamir_Khan_Productions_Logo.jpg" alt="Aamir Khan Productions">
+      <h3>Aamir Khan Productions</h3>
+      <a href="aamir.html">View All Movies</a>
+    </div>
+    <div class="studio-card">
+      <img src="https://upload.wikimedia.org/wikipedia/en/d/d1/Walt_Disney_Pictures_2011_logo.svg" alt="Walt Disney Pictures">
+      <h3>Walt Disney Pictures</h3>
+      <a href="disney.html">View All Movies</a>
+    </div>
+  </div>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const studioCards = document.querySelectorAll('.studio-card');
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase();
+      studioCards.forEach(card => {
+        const name = card.querySelector('h3').innerText.toLowerCase();
+        card.style.display = name.includes(query) ? 'block' : 'none';
+      });
+    });
+  </script>
+
+</body>
+</html>
