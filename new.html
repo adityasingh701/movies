@@ -6,17 +6,32 @@
   <title>🆕 Latest Movies</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    .coming-soon {
-      display: inline-block;
-      background: crimson;
-      color: white;
-      font-size: 12px;
-      font-weight: bold;
-      padding: 4px 8px;
-      border-radius: 5px;
-      margin-top: 5px;
-    }
-  </style>
+  .coming-soon {
+    display: inline-block;
+    background: crimson;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 5px;
+    margin-top: 5px;
+    animation: pulse 1.5s infinite;
+    box-shadow: 0 0 0 rgba(220, 20, 60, 0.7);
+  }
+
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(220, 20, 60, 0.6);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(220, 20, 60, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(220, 20, 60, 0);
+    }
+  }
+</style>
+
 </head>
 <body>
 
@@ -48,8 +63,8 @@
 
   <div class="movie-grid" id="movieList">
     <div class="movie-card" data-genre="action" data-year="2025">
-      <img src="https://via.placeholder.com/300x200?text=Deadpool+3" alt="Deadpool 3">
-      <h3>Deadpool & Wolverine 🆕</h3>
+      <img src="kannappa.img.png" alt="">
+      <h3>Kannappa 🆕</h3>
       <span class="coming-soon">🕒 Coming Soon</span><br>
       <a href="#">Coming Soon</a>
     </div>
