@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Warner Bros Movies</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <h2>🎞 Warner Bros Movies</h2>
+    <div>
+      <a href="index.html" style="text-decoration:none;color:var(--text);font-weight:bold;">⬅ Back</a>
+      <button class="toggle-btn" onclick="toggleDark()">🌗 Dark Mode</button>
+    </div>
+  </header>
+
+  <div class="filters">
+    <input type="text" id="searchInput" placeholder="Search Movies...">
+    <select id="genreFilter">
+      <option value="">All Genres</option>
+      <option value="action">Action</option>
+      <option value="fantasy">Fantasy</option>
+      <option value="drama">Drama</option>
+    </select>
+    <select id="yearFilter">
+      <option value="">All Years</option>
+      <option value="2023">2023</option>
+      <option value="2022">2022</option>
+      <option value="2021">2021</option>
+    </select>
+  </div>
+
+  <div class="movie-grid" id="movieList">
+    <div class="movie-card" data-genre="action" data-year="2023">
+      <img src="https://via.placeholder.com/300x200?text=The+Batman" alt="The Batman">
+      <h3>The Batman</h3>
+      <a href="https://drive.google.com/drive/folders/EXAMPLE1" target="_blank">Watch Now</a>
+    </div>
+
+    <div class="movie-card" data-genre="fantasy" data-year="2022">
+      <img src="https://via.placeholder.com/300x200?text=Fantastic+Beasts" alt="Fantastic Beasts">
+      <h3>Fantastic Beasts 3</h3>
+      <a href="https://drive.google.com/drive/folders/EXAMPLE2" target="_blank">Watch Now</a>
+    </div>
+
+    <div class="movie-card" data-genre="drama" data-year="2021">
+      <img src="https://via.placeholder.com/300x200?text=Joker" alt="Joker">
+      <h3>Joker</h3>
+      <a href="https://drive.google.com/drive/folders/EXAMPLE3" target="_blank">Watch Now</a>
+    </div>
+  </div>
+
+  <script>
+    function toggleDark() {
+      document.body.classList.toggle('dark');
+    }
+
+    const searchInput = document.getElementById("searchInput");
+    const genreFilter = document.getElementById("genreFilter");
+    const yearFilter = document.getElementById("yearFilter");
+    const movieCards = document.querySelectorAll(".movie-card");
+
+    function filterMovies() {
+      const search = searchInput.value.toLowerCase();
+      const genre = genreFilter.value;
+      const year = yearFilter.value;
+
+      movieCards.forEach(card => {
+        const title = card.querySelector("h3").innerText.toLowerCase();
+        const matchSearch = title.includes(search);
+        const matchGenre = genre ? card.dataset.genre === genre : true;
+        const matchYear = year ? card.dataset.year === year : true;
+        card.style.display = (matchSearch && matchGenre && matchYear) ? "block" : "none";
+      });
+    }
+
+    searchInput.addEventListener("input", filterMovies);
+    genreFilter.addEventListener("change", filterMovies);
+    yearFilter.addEventListener("change", filterMovies);
+  </script>
+
+</body>
+</html>
