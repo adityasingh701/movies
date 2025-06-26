@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🆕 Latest Movies</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .coming-soon {
+      display: inline-block;
+      background: crimson;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 5px;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+
+  <header>
+    <h2>🆕 Latest Movie Releases</h2>
+    <div>
+      <a href="index.html" style="text-decoration:none;color:var(--text);font-weight:bold;">⬅ Back</a>
+      <button class="toggle-btn" onclick="toggleDark()">🌗 Dark Mode</button>
+    </div>
+  </header>
+
+
+  <div class="filters">
+    <input type="text" id="searchInput" placeholder="Search Movies...">
+    <select id="genreFilter">
+      <option value="">All Genres</option>
+      <option value="action">Action</option>
+      <option value="horror">Horror</option>
+      <option value="comedy">Comedy</option>
+    </select>
+    <select id="yearFilter">
+      <option value="">All Years</option>
+      <option value="2025">2025</option>
+      <option value="2024">2024</option>
+    </select>
+  </div>
+
+
+  <div class="movie-grid" id="movieList">
+    <div class="movie-card" data-genre="action" data-year="2025">
+      <img src="https://via.placeholder.com/300x200?text=Deadpool+3" alt="Deadpool 3">
+      <h3>Deadpool & Wolverine 🆕</h3>
+      <span class="coming-soon">🕒 Coming Soon</span><br>
+      <a href="#">Coming Soon</a>
+    </div>
+
+
+    <div class="movie-card" data-genre="horror" data-year="2025">
+      <img src="https://via.placeholder.com/300x200?text=The+Nun+2" alt="The Nun 2">
+      <h3>The Nun 2 🆕</h3>
+      <a href="https://drive.google.com/drive/folders/EXAMPLE1" target="_blank">Watch Now</a>
+    </div>
+
+
+    <div class="movie-card" data-genre="comedy" data-year="2024">
+      <img src="https://via.placeholder.com/300x200?text=Fukrey+3" alt="Fukrey 3">
+      <h3>Fukrey 3</h3>
+      <a href="https://drive.google.com/drive/folders/EXAMPLE2" target="_blank">Watch Now</a>
+    </div>
+  </div>
+
+
+  <script>
+    function toggleDark() {
+      document.body.classList.toggle('dark');
+    }
+
+
+    const searchInput = document.getElementById("searchInput");
+    const genreFilter = document.getElementById("genreFilter");
+    const yearFilter = document.getElementById("yearFilter");
+    const movieCards = document.querySelectorAll(".movie-card");
+
+
+    function filterMovies() {
+      const search = searchInput.value.toLowerCase();
+      const genre = genreFilter.value;
+      const year = yearFilter.value;
+
+
+      movieCards.forEach(card => {
+        const title = card.querySelector("h3").innerText.toLowerCase();
+        const matchSearch = title.includes(search);
+        const matchGenre = genre ? card.dataset.genre === genre : true;
+        const matchYear = year ? card.dataset.year === year : true;
+        card.style.display = (matchSearch && matchGenre && matchYear) ? "block" : "none";
+      });
+    }
+
+
+    searchInput.addEventListener("input", filterMovies);
+    genreFilter.addEventListener("change", filterMovies);
+    yearFilter.addEventListener("change", filterMovies);
+  </script>
+
+
+</body>
+</html>
+
