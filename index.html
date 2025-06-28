@@ -94,13 +94,25 @@
       font-size: 0.9em;
       color: #999;
     }
+
+    .profile-pic {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--accent);
+    }
+    
   </style>
 </head>
 <body>
   <header>
     <div class="left">
-      <button class="icon-btn" onclick="location.href='about.html'">🎞️ </button>
-    </div>
+  <button class="icon-btn" onclick="location.href='about.html'">
+    <img src="alogo.png" alt="About" class="profile-pic" />
+  </button>
+</div>
+
     <div class="brand">⭐ The CineHall ⭐</div>
     <div class="right">
       <button class="icon-btn" onclick="toggleDark()">🌗</button>
