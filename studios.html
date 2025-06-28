@@ -98,6 +98,26 @@
       color: var(--accent);
       font-weight: bold;
     }
+    .glow-text {
+      font-size: 3em;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: #fff;
+      text-shadow: 0 0 10px #6f42c1, 0 0 20px #6f42c1, 0 0 30px #6f42c1;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% {
+        text-shadow: 0 0 10px #6f42c1, 0 0 20px #6f42c1, 0 0 30px #6f42c1;
+      }
+      50% {
+        text-shadow: 0 0 20px #bb86fc, 0 0 30px #bb86fc, 0 0 40px #bb86fc;
+      }
+      100% {
+        text-shadow: 0 0 10px #6f42c1, 0 0 20px #6f42c1, 0 0 30px #6f42c1;
+      }
+    }
   </style>
 </head>
 <body>
@@ -118,7 +138,7 @@
     <div class="studio-card">
       
       <img src="new-movies.jpg" alt="New Releases Movies">
-      <h3>ㅤㅤㅤㅤㅤㅤ</h3>
+      <div class="glow-text">New Releases Movies</div>
       <a href="new.html">View All Movies</a>
     </div>
     <div class="studio-card">
