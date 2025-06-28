@@ -105,7 +105,7 @@
       color: #fff;
       background-color: #ff0000;
       text-shadow: 0 0 10px #6f42c1, 0 0 20px #6f42c1, 0 0 30px #6f42c1;
-      animation: pulse 2s infinite ease-in-out;
+      animation: pulse 1s infinite ease-in-out;
     }
 
     @keyframes pulse {
@@ -140,56 +140,57 @@
       
       <img src="new-movies.jpg" alt="">
       <div class="glow-text">New Releases Movies</div>
+      <h2>ㅤㅤ</h2>
       <a href="new.html">View All Movies</a>
     </div>
     <div class="studio-card">
       <img src="marvel.img.png" alt="">
-      <h3>Marvel Studios</h3>
+      <h2>Marvel Studios</h2>
       <a href="marvel.html">View All Movies</a>
     </div>
     <div class="studio-card">
       <img src="warnerbros.img.png" alt="">
-      <h3>Warner Bros</h3>
+      <h2>Warner Bros</h2>
       <a href="warnerbros.html">View All Movies</a>
     </div>
     <div class="studio-card">
       <img src="yrf.img.png" alt="">
-      <h3>Yash Raj Films</h3>
+      <h2>Yash Raj Films</h2>
       <a href="yrf.html">View All Movies</a>
     </div>
     <div class="studio-card">
       <img src="dharma.img.png" alt="">
-      <h3>Dharma Productions</h3>
+      <h2>Dharma Productions</h2>
       <a href="dharma.html">View All Movies</a>
     </div>
     <div class="studio-card">
       <img src="paramount.img.png" alt="">
-      <h3>Paramount Pictures</h3>
+      <h2>Paramount Pictures</h2>
       <a href="paramount.html">View All Movies</a>
     </div>
     <div class="studio-card">
       <img src="universal.img.png" alt="">
-      <h3>Universal Pictures</h3>
+      <h2>Universal Pictures</h2>
       <a href="universal.html">View All Movies</a>
     </div>
     <div class="studio-card">
       <img src="century.img.png" alt="">
-      <h3>20th Century Studios</h3>
+      <h2>20th Century Studios</h2>
       <a href="twentieth.html">View All Movies</a>
     </div>
     <div class="studio-card">
       <img src="tseries.img.png" alt="">
-      <h3>T-Series Films</h3>
+      <h2>T-Series Films</h2>
       <a href="tseries.html">View All Movies</a>
     </div>
     <div class="studio-card">
       <img src="aamir.img.png" alt="">
-      <h3>Aamir Khan Productions</h3>
+      <h2>Aamir Khan Productions</h2>
       <a href="aamir.html">View All Movies</a>
     </div>
     <div class="studio-card">
       <img src="disney.img.png" alt="">
-      <h3>Walt Disney Pictures</h3>
+      <h2>Walt Disney Pictures</h2>
       <a href="disney.html">View All Movies</a>
     </div>
   </div>
@@ -201,7 +202,7 @@
     searchInput.addEventListener('input', () => {
       const query = searchInput.value.toLowerCase();
       studioCards.forEach(card => {
-        const name = card.querySelector('h3').innerText.toLowerCase();
+        const name = card.querySelector('h2').innerText.toLowerCase();
         card.style.display = name.includes(query) ? 'block' : 'none';
       });
     });
