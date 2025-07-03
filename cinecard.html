@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CineCard Generator</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #0f0f0f, #1c1c1c);
+      color: #fff;
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      color: #ffcc00;
+      text-shadow: 1px 1px 5px #000;
+    }
+    input, select, button {
+      padding: 10px;
+      margin: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    input, select {
+      width: 250px;
+    }
+    #cinecard {
+      margin: 30px auto;
+      background: linear-gradient(to bottom right, #222, #333);
+      padding: 20px;
+      border-radius: 15px;
+      width: 340px;
+      box-shadow: 0 0 25px rgba(255, 204, 0, 0.4);
+      position: relative;
+    }
+    #cinecard h2 {
+      margin-bottom: 10px;
+      color: #ffcc00;
+      text-shadow: 1px 1px 5px #000;
+    }
+    #cinecard p {
+      margin: 6px 0;
+      font-size: 15px;
+    }
+    #cinehall-brand {
+      font-size: 13px;
+      margin-top: 10px;
+      color: #bbb;
+    }
+    #buttons {
+      margin-top: 20px;
+    }
+    .action-btn {
+      background: #ffcc00;
+      color: #000;
+      font-weight: bold;
+      padding: 10px 18px;
+      border-radius: 6px;
+      margin: 5px;
+      cursor: pointer;
+    }
+    .action-btn:hover {
+      background: #e6b800;
+    }
+    #shareBtn {
+      background: #25d366;
+      color: white;
+    }
+    #shareBtn:hover {
+      background: #1da851;
+    }
+    .logo {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 50px;
+      opacity: 0.1;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎬 Generate Your CineCard</h1>
+  <input type="text" id="nameInput" placeholder="Your Name" />
+  <select id="genreSelect">
+    <option value="Action">Action</option>
+    <option value="Horror">Horror</option>
+    <option value="Comedy">Comedy</option>
+    <option value="Drama">Drama</option>
+    <option value="Sci-Fi">Sci-Fi</option>
+  </select>
+  <br>
+  <button class="action-btn" onclick="generateCard()">🎫 Create CineCard</button>
+
+
+  <div id="cinecard" style="display:none;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/13/Cinema_theatre_icon.svg" class="logo" />
+    <h2>CineCard: Official Movie Identity</h2>
+    <p><strong>👤 Name:</strong> <span id="cardName"></span></p>
+    <p><strong>🎭 Genre:</strong> <span id="cardGenre"></span></p>
+    <p><strong>🎥 Movie:</strong> <span id="cardMovie"></span></p>
+    <p><strong>🔥 Tagline:</strong> <span id="cardTagline"></span></p>
+    <div id="cinehall-brand">🔒 Certified by The CineHall Universe</div>
+  </div>
+
+
+  <div id="buttons" style="display:none;">
+    <button class="action-btn" onclick="downloadCard()">⬇️ Download CineCard</button>
+    <button class="action-btn" id="shareBtn" onclick="shareCard()">📲 Share CineCard</button>
+  </div>
+
+
+  <script>
+    function randomFrom(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+
+    const movies = {
+      Action: ["The Last Bullet", "Mumbai Vendetta", "Dead Code"],
+      Horror: ["Whispers in the Dark", "The Forgotten Room", "CineHaunt"],
+      Comedy: ["Drama Queen", "Full Time Fool", "Popcorn Punch"],
+      Drama: ["Broken Ties", "Letters from Nowhere", "The Final Act"],
+      "Sci-Fi": ["2049 Protocol", "Cosmic Gate", "Neon Mind"]
+    };
+
+
+    const taglines = {
+      Action: ["No rules. Just revenge.", "One city. One hero.", "Reload. Revenge. Repeat."],
+      Horror: ["It lives inside.", "You were never alone.", "Silence can kill."],
+      Comedy: ["Laugh till you drop!", "Chaos is guaranteed.", "One joke can change it all."],
+      Drama: ["Truth has a price.", "Emotions never lie.", "Tears speak louder than words."],
+      "Sci-Fi": ["Future is broken.", "Beyond human limits.", "Code or be coded."]
+    };
+
+
+    function generateCard() {
+      const name = document.getElementById('nameInput').value || "Anonymous";
+      const genre = document.getElementById('genreSelect').value;
+
+
+      const movie = randomFrom(movies[genre]);
+      const tagline = randomFrom(taglines[genre]);
+
+
+      document.getElementById('cardName').innerText = name;
+      document.getElementById('cardGenre').innerText = genre;
+      document.getElementById('cardMovie').innerText = movie;
+      document.getElementById('cardTagline').innerText = tagline;
+
+
+      document.getElementById('cinecard').style.display = 'block';
+      document.getElementById('buttons').style.display = 'block';
+    }
+
+
+    function downloadCard() {
+      const card = document.getElementById("cinecard");
+      html2canvas(card).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "My_CineCard.png";
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+
+
+    function shareCard() {
+      html2canvas(document.getElementById("cinecard")).then(canvas => {
+        canvas.toBlob(blob => {
+          const file = new File([blob], "CineCard.png", { type: "image/png" });
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            navigator.share({
+              files: [file],
+              title: "My CineCard",
+              text: "Check out my CineCard from CineHall! 🎬",
+            }).catch(err => alert("Sharing cancelled or not supported."));
+          } else {
+            alert("Sharing not supported on this device. Please download instead.");
+          }
+        });
+      });
+    }
+  </script>
+</body>
+</html>
+
