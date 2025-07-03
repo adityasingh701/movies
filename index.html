@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Movies Organisation</title>
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+  <script>
+    (function() {
+      emailjs.init("Kl_zYzD73b9-7XVxu"); // ✅ Your public key
+    })();
+  </script>
   <style>
     :root {
       --bg: #f5f7fa;
@@ -96,19 +102,25 @@
     }
 
     .profile-pic {
-  width: 67px;
-  height: 67px;
+      width: 67px;
+      height: 67px;
     }
-    
+
+    #emailInput {
+      padding: 10px;
+      margin-bottom: 10px;
+      width: 80%;
+      font-size: 16px;
+    }
   </style>
 </head>
 <body>
   <header>
     <div class="left">
-  <button class="icon-btn" onclick="location.href='about.html'">
-    <img src="alogo.png" alt="About" class="profile-pic" />
-  </button>
-</div>
+      <button class="icon-btn" onclick="location.href='about.html'">
+        <img src="alogo.png" alt="About" class="profile-pic" />
+      </button>
+    </div>
 
     <div class="brand">⭐ The CineHall ⭐</div>
     <div class="right">
@@ -123,11 +135,13 @@
       <a href="studios.html">🧿 Movies Session 🎥</a>
     </div>
 
+    <!-- Email Subscribe Section -->
     <div class="link-button">
-      <button class=""> 💠 Subscribe for upcoming movies.💠</button>
+      <input type="email" id="emailInput" placeholder="अपनी Email डालें">
+      <br>
+      <button onclick="sendEmail()">📩 Subscribe for Upcoming Movies</button>
+      <p id="status" style="margin-top: 10px; font-size: 14px;"></p>
     </div>
-
-
   </div>
 
   <footer>
@@ -138,7 +152,31 @@
     function toggleDark() {
       document.body.classList.toggle('dark');
     }
+
+    function sendEmail() {
+      const email = document.getElementById("emailInput").value;
+      const status = document.getElementById("status");
+
+      if (!email) {
+        status.innerText = "⚠️ कृपया पहले Email डालें!";
+        status.style.color = "orange";
+        return;
+      }
+
+      emailjs.send("cinehall_emails", "template_x9jfjrj", {
+        to_email: email,
+        message: "🎉 धन्यवाद! आपने CineHall की movie updates के लिए subscribe किया है।"
+      })
+      .then(function(response) {
+        status.innerText = "✅ Email भेजा गया!";
+        status.style.color = "#00ff99";
+      }, function(error) {
+        status.innerText = "❌ भेजने में समस्या आई।";
+        status.style.color = "red";
+      });
+    }
   </script>
-  
+
 </body>
 </html>
+
