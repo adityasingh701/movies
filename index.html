@@ -6,11 +6,37 @@
   <title>Movies Organisation</title>
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+    import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDca3W2n2NVgfdgfAkEsM7u7YkCNoYdP-I",
+      authDomain: "view-d9e69.firebaseapp.com",
+      projectId: "view-d9e69",
+      storageBucket: "view-d9e69.firebasestorage.app",
+      messagingSenderId: "967557277351",
+      appId: "1:967557277351:web:d6dada72d10098c0a11d82",
+      measurementId: "G-8P3K4WSPNW",
+      databaseURL: "https://view-d9e69-default-rtdb.firebaseio.com"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const viewRef = ref(db, 'pageViews');
+    onValue(viewRef, (snapshot) => {
+      let views = snapshot.val() || 0;
+      document.getElementById("viewCounter").innerText = views;
+      set(viewRef, views + 1);
+    });
+  </script>
+
   <script>
     (function() {
-      emailjs.init("Kl_zYzD73b9-7XVxu"); // ✅ Your public key
+      emailjs.init("Kl_zYzD73b9-7XVxu");
     })();
   </script>
+
   <style>
     :root {
       --bg: #f5f7fa;
@@ -112,6 +138,12 @@
       width: 80%;
       font-size: 16px;
     }
+
+    #viewCounter {
+      font-weight: bold;
+      color: var(--accent);
+      font-size: 16px;
+    }
   </style>
 </head>
 <body>
@@ -130,7 +162,8 @@
 
   <div class="container">
     <div class="link-button">
-      <a href="cinecard.html">⚪ CineCard Generated 🗿</div>
+      <a href="cinecard.html">⚪ CineCard Generator 🗿</a>
+    </div>
 
     <div class="link-button">
       <a href="studios.html">🧿 Movies Session 🎥</a>
@@ -139,9 +172,13 @@
     <!-- Email Subscribe Section -->
     <div class="link-button">
       <input type="email" id="emailInput" placeholder="अपनी Email डालें">
-      
       <button onclick="sendEmail()">📩 Subscribe for Upcoming Movies</button>
       <p id="status" style="margin-top: 10px; font-size: 14px;"></p>
+    </div>
+
+    <!-- Views Counter -->
+    <div class="link-button">
+      👁️ Total Page Views: <span id="viewCounter">Loading...</span>
     </div>
   </div>
 
@@ -177,7 +214,5 @@
       });
     }
   </script>
-
 </body>
 </html>
-
