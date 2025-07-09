@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DC Universe Movies</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+
+  <header>
+    <h2>🦇 DC Universe</h2>
+    <div>
+      <a href="index.html" style="text-decoration:none;color:var(--text);font-weight:bold;">⬅ Back</a>
+      <button class="toggle-btn" onclick="toggleDark()">🌗 Dark Mode</button>
+    </div>
+  </header>
+
+
+  <div class="filters">
+    <input type="text" id="searchInput" placeholder="Search Movies...">
+    <select id="genreFilter">
+      <option value="">All Genres</option>
+      <option value="action">Action</option>
+      <option value="fantasy">Fantasy</option>
+      <option value="drama">Drama</option>
+      <option value="sci-fi">Sci-Fi</option>
+    </select>
+    <select id="yearFilter">
+      <option value="">All Years</option>
+      <option value="2025" >2025 </option>
+      <option value="2023">2023</option>
+      <option value="2022">2022</option>
+      <option value="2021">2021</option>
+    </select>
+  </div>
+
+
+  <div class="movie-grid" id="movieList">
+    <div class="movie-card" data-genre="action" data-year="2023">
+      <img src="https://via.placeholder.com/300x200?text=The+Flash" alt="The Flash">
+      <h3>The Flash</h3>
+      <a href="https://drive.google.com/drive/folders/EXAMPLE_FLASH" target="_blank">Watch Now</a>
+    </div>
+
+
+    <div class="movie-card" data-genre="fantasy" data-year="2022">
+      <img src="https://via.placeholder.com/300x200?text=Black+Adam" alt="Black Adam">
+      <h3>Black Adam</h3>
+      <a href="https://drive.google.com/drive/folders/EXAMPLE_ADAM" target="_blank">Watch Now</a>
+    </div>
+
+
+    <div class="movie-card" data-genre="drama" data-year="2021">
+      <img src="https://via.placeholder.com/300x200?text=Zack+Snyder's+Justice+League" alt="Justice League">
+      <h3>Zack Snyder's Justice League</h3>
+      <a href="https://drive.google.com/drive/folders/EXAMPLE_JL" target="_blank">Watch Now</a>
+    </div>
+
+
+    <div class="movie-card" data-genre="sci-fi" data-year="2023">
+      <img src="https://via.placeholder.com/300x200?text=Blue+Beetle" alt="Blue Beetle">
+      <h3>Blue Beetle</h3>
+      <a href="https://drive.google.com/drive/folders/EXAMPLE_BEETLE" target="_blank">Watch Now</a>
+    </div>
+  </div>
+
+
+  <script>
+    function toggleDark() {
+      document.body.classList.toggle('dark');
+    }
+
+
+    const searchInput = document.getElementById("searchInput");
+    const genreFilter = document.getElementById("genreFilter");
+    const yearFilter = document.getElementById("yearFilter");
+    const movieCards = document.querySelectorAll(".movie-card");
+
+
+    function filterMovies() {
+      const search = searchInput.value.toLowerCase();
+      const genre = genreFilter.value;
+      const year = yearFilter.value;
+
+
+      movieCards.forEach(card => {
+        const title = card.querySelector("h3").innerText.toLowerCase();
+        const matchSearch = title.includes(search);
+        const matchGenre = genre ? card.dataset.genre === genre : true;
+        const matchYear = year ? card.dataset.year === year : true;
+        card.style.display = (matchSearch && matchGenre && matchYear) ? "block" : "none";
+      });
+    }
+
+
+    searchInput.addEventListener("input", filterMovies);
+    genreFilter.addEventListener("change", filterMovies);
+    yearFilter.addEventListener("change", filterMovies);
+  </script>
+
+
+</body>
+</html>
+
