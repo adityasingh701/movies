@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Top Movies</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+
+    .movie-listing {
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 15px;
+
+    }
+
+
+
+    .movie-item {
+
+      display: flex;
+
+      background: var(--card);
+
+      border-left: 5px solid #007bff;
+
+      border-radius: 6px;
+
+      padding: 10px;
+
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+
+      transition: 0.3s;
+
+      flex-wrap: wrap;
+
+    }
+
+
+
+    .movie-item img {
+
+      width: 100px;
+
+      height: auto;
+
+      border-radius: 4px;
+
+      margin-right: 15px;
+
+    }
+
+
+
+    .movie-details {
+
+      flex: 1;
+
+    }
+
+
+
+    .movie-title {
+
+      font-size: 18px;
+
+      font-weight: bold;
+
+      color: var(--text);
+
+    }
+
+
+
+    .badge {
+
+      display: inline-block;
+
+      font-size: 12px;
+
+      background: crimson;
+
+      color: white;
+
+      padding: 4px 8px;
+
+      border-radius: 4px;
+
+      margin-top: 5px;
+
+      font-weight: bold;
+
+    }
+
+
+
+    .movie-links a {
+
+      display: inline-block;
+
+      margin-right: 10px;
+
+      text-decoration: none;
+
+      font-weight: bold;
+
+      color: var(--accent);
+
+    }
+
+
+
+    .movie-links a:hover {
+
+      text-decoration: underline;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+
+
+  <header>
+
+    <h2>📽️ World's Top Movies 🎥</h2>
+
+    <div>
+
+      <a href="studios.html" style="text-decoration:none;color:var(--text);font-weight:bold;">⬅ Back</a>
+
+      <button class="toggle-btn" onclick="toggleDark()">🌗 Dark Mode</button>
+
+    </div>
+
+  </header>
+
+
+
+  <div class="filters">
+
+    <input type="text" id="searchInput" placeholder="Search Movies...">
+
+    <select id="genreFilter">
+
+      <option value="">All Genres</option>
+
+      <option value="action">Action</option>
+
+      <option value="horror">Horror</option>
+
+      <option value="comedy">Comedy</option>
+
+      <option value="drama">Drama</option>
+
+      <option value="sci-fi">Sci-Fi</option>
+      <option value="animation">Animation</option>
+
+    </select>
+
+    <select id="yearFilter">
+
+      <option value="">All Years</option>
+
+      <option value="2025">2025</option>
+      <option value="2024">2024</option>
+      <option value="2023">2023</option>
+      <option value="2022">2022</option>
+      <option value="2021">2021</option>
+      <option value="2020">2020</option>
+
+    </select>
+
+  </div>
+
+
+
+  <div class="movie-listing" id="movieList">
+
+    <div class="movie-item" data-genre="Animation" data-year="2025">
+
+      <img src="nezha.jpg" alt="">
+
+      <div class="movie-details">
+
+        <div class="movie-title">Ne Zha 2025</div>
+
+        <div class="badge">Animation</div>ㅤ<div class="badge">Action</div>
+
+        <div class="movie-links">
+
+          <a href="https://www.filmyzilla13.com/downloads/29568/1/server_1/">Download (480p)</a>
+
+          <a href="https://www.filmyzilla13.com/downloads/29567/1/server_1/">Download (720p)</a>
+
+        </div>
+
+      </div>
+
+    </div>
+       
+
+    <!-- Add more items below this with same structure -->
+
+  </div>
+
+
+
+  <script>
+
+    function toggleDark() {
+
+      document.body.classList.toggle('dark');
+
+    }
+
+
+
+    const searchInput = document.getElementById("searchInput");
+
+    const genreFilter = document.getElementById("genreFilter");
+
+    const yearFilter = document.getElementById("yearFilter");
+
+    const movieItems = document.querySelectorAll(".movie-item");
+
+
+
+    function filterMovies() {
+
+      const search = searchInput.value.toLowerCase();
+
+      const genre = genreFilter.value;
+
+      const year = yearFilter.value;
+
+
+
+      movieItems.forEach(item => {
+
+        const title = item.querySelector(".movie-title").innerText.toLowerCase();
+
+        const matchSearch = title.includes(search);
+
+        const matchGenre = genre ? item.dataset.genre === genre : true;
+
+        const matchYear = year ? item.dataset.year === year : true;
+
+        item.style.display = (matchSearch && matchGenre && matchYear) ? "flex" : "none";
+
+      });
+
+    }
+
+
+
+    searchInput.addEventListener("input", filterMovies);
+
+    genreFilter.addEventListener("change", filterMovies);
+
+    yearFilter.addEventListener("change", filterMovies);
+
+  </script>
+
+
+
+</body>
+
+</html>
+
