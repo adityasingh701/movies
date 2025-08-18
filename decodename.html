@@ -1,220 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Atbash + Caesar (−19) Encoder / Decoder</title>
-  <style>
-    :root{
-      --bg:#0b0f14; --panel:#121821; --ink:#e6edf3; --muted:#a6b3c2; --accent:#5eead4;
-      --ok:#22c55e; --warn:#f59e0b; --err:#ef4444; --card:#0f141b; --chip:#1a2430;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Arial,sans-serif;background:linear-gradient(180deg,var(--bg),#0d141c 30%,#0a1016);color:var(--ink);}
-    .wrap{max-width:920px;margin:auto;padding:24px 16px;}
-    header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:18px}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#22d3ee,#34d399,#a78bfa);display:grid;place-items:center;font-weight:700;color:#0b0f14}
-    .title{font-size:clamp(18px,2.6vw,24px);font-weight:700}
-    .subtitle{color:var(--muted);font-size:13px}
-
-
-    .card{background:linear-gradient(180deg,var(--panel),#0c131b);border:1px solid #1b2634;border-radius:18px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
-    .grid{display:grid;gap:14px}
-    @media(min-width:860px){.grid{grid-template-columns:1fr 1fr}}
-
-
-    textarea{width:100%;min-height:140px;background:var(--card);color:var(--ink);border:1px solid #1e2a39;border-radius:14px;padding:12px 14px;resize:vertical;font:inherit;line-height:1.35}
-    textarea:focus{outline:2px solid #2dd4bf;border-color:#2dd4bf}
-    .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px}
-    .btn{background:#0f1722;border:1px solid #263345;color:var(--ink);padding:10px 14px;border-radius:12px;cursor:pointer;font-weight:600;transition:transform .05s ease,background .2s}
-    .btn:hover{background:#152132}
-    .btn:active{transform:scale(.98)}
-    .btn.ok{border-color:#1f7a52}
-    .btn.warn{border-color:#6d4b0b}
-    .btn.ghost{background:transparent}
-    .pill{display:inline-flex;align-items:center;gap:8px;background:var(--chip);border:1px solid #213044;border-radius:999px;padding:8px 12px;font-size:13px;color:var(--muted)}
-    .switch{display:inline-flex;gap:8px;align-items:center}
-    .switch input{accent-color:#2dd4bf}
-
-
-    .mini{font-size:12px;color:var(--muted)}
-    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-    .footer{margin-top:18px;color:var(--muted);font-size:12px}
-
-
-    .table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid #1e2a39;border-radius:14px;overflow:hidden}
-    .table th,.table td{padding:8px 10px;border-bottom:1px solid #182333;text-align:center}
-    .table th{background:#0d141d;color:#b9c6d6}
-    .table tr:last-child td{border-bottom:none}
-    .chips{display:flex;gap:8px;flex-wrap:wrap}
-    .chip{background:var(--chip);border:1px solid #1d2a3a;border-radius:999px;padding:6px 10px;font-size:12px;color:#cbd5e1}
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Atbash + Caesar (−19) Encoder / Decoder</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #0b0f14; color: #e6edf3; margin: 0; padding: 20px; text-align: center; }
+    textarea { width: 90%; max-width: 600px; height: 120px; margin: 10px auto; display: block; background: #121821; color: #e6edf3; border: 1px solid #263345; border-radius: 8px; padding: 10px; }
+    button { margin: 8px; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    .encode { background: #22c55e; color: #0b0f14; }
+    .decode { background: #3b82f6; color: #fff; }
+  </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="brand">
-        <div class="logo">A+C</div>
-        <div>
-          <div class="title">Atbash + Caesar (−19) — Encoder / Decoder</div>
-          <div class="subtitle">Safe, offline, single‑file tool. Letters only shift; spaces & punctuation stay.</div>
-        </div>
-      </div>
-      <button id="copyOut" class="btn" title="Copy output">Copy Output</button>
-    </header>
+  <h2>Atbash + Caesar (−19) Encoder / Decoder</h2>
+  <textarea id="input" placeholder="Type text here..."></textarea>
+  <div>
+    <button class="encode" onclick="run('encode')">Encode</button>
+    <button class="decode" onclick="run('decode')">Decode</button>
+  </div>
+  <textarea id="output" placeholder="Result..." readonly></textarea>
 
-
-    <section class="grid">
-      <div class="card">
-        <label class="pill">Input</label>
-        <textarea id="input" placeholder="Type text here… e.g. PRACHI NIGAM or RPGEZY TYAGU"></textarea>
-        <div class="controls">
-          <label class="switch"><input type="radio" name="mode" value="encode" checked> <span>Encode (Atbash → Caesar −19)</span></label>
-          <label class="switch"><input type="radio" name="mode" value="decode"> <span>Decode (Caesar +19 → Atbash)</span></label>
-          <label class="switch"><input type="checkbox" id="keepCase" checked> <span>Keep letter case</span></label>
-          <label class="switch"><input type="checkbox" id="autoUpper"> <span>Force UPPERCASE</span></label>
-          <button id="clear" class="btn ghost">Clear</button>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <label class="pill">Output</label>
-        <textarea id="output" readonly placeholder="Your result will appear here…"></textarea>
-        <div class="controls">
-          <div class="chips">
-            <span class="chip">Test 1: <strong class="mono">RPGEZY TYAGU</strong> → <span class="mini">(decode) PRACHI NIGAM</span></span>
-            <span class="chip">Test 2: <strong class="mono">ADITYA SINGH</strong> → <span class="mini">(encode) GDYNIG OYTAZ</span></span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-    <section class="card" style="margin-top:14px">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-        <span class="pill">Mapping Table (A–Z)</span>
-        <button id="copyTable" class="btn">Copy Table</button>
-      </div>
-      <div class="mini" style="margin:8px 2px 10px">This chart shows the final substitution for the combined method (Atbash then Caesar −19). Use it directly to hand‑encode text.</div>
-      <div style="overflow:auto;border-radius:12px">
-        <table class="table mono" id="mapTable">
-          <thead>
-            <tr><th>Letter</th><th>Atbash</th><th>After −19</th><th>Final Code</th></tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-      </div>
-      <div class="footer">Tip: Decoding does the reverse order (Caesar +19, then Atbash). Only A–Z/a–z are transformed; other characters are preserved.</div>
-    </section>
-
-
-    <section class="footer">
-      Built for Aditya with extra care. If you spot anything odd, try the tests above to verify. ✔️
-    </section>
-  </div>
-
-
-  <script>
-    // --- Core ciphers ---
-    function atbashChar(code, isUpper){
-      const base = isUpper ? 65 : 97; // 'A' or 'a'
-      return base + (25 - (code - base));
-    }
-    function caesarChar(code, isUpper, shift){
-      const base = isUpper ? 65 : 97;
-      return base + (((code - base + shift) % 26) + 26) % 26;
-    }
-    function transform(text, mode, keepCase=true, forceUpper=false){
-      const stepEncode = (ch) => { // Atbash -> Caesar -19
-        const code = ch.charCodeAt(0);
-        const isUpper = ch >= 'A' && ch <= 'Z';
-        const isLower = ch >= 'a' && ch <= 'z';
-        if(!isUpper && !isLower) return ch;
-        const up = keepCase ? isUpper : true; // if not keeping case, treat as uppercase
-        const afterAtbash = atbashChar(code, up);
-        const afterShift = caesarChar(afterAtbash, up, -19);
-        let out = String.fromCharCode(afterShift);
-        if(!keepCase) out = out.toUpperCase();
-        if(forceUpper) out = out.toUpperCase();
-        return out;
-      };
-      const stepDecode = (ch) => { // Caesar +19 -> Atbash
-        const code = ch.charCodeAt(0);
-        const isUpper = ch >= 'A' && ch <= 'Z';
-        const isLower = ch >= 'a' && ch <= 'z';
-        if(!isUpper && !isLower) return ch;
-        const up = keepCase ? isUpper : true;
-        const afterShift = caesarChar(code, up, +19);
-        const afterAtbash = atbashChar(afterShift, up);
-        let out = String.fromCharCode(afterAtbash);
-        if(!keepCase) out = out.toUpperCase();
-        if(forceUpper) out = out.toUpperCase();
-        return out;
-      };
-      const fn = mode === 'decode' ? stepDecode : stepEncode;
-      return Array.from(text).map(fn).join('');
-    }
-
-
-    // --- UI wiring ---
-    const $ = (sel) => document.querySelector(sel);
-    const $$ = (sel) => Array.from(document.querySelectorAll(sel));
-    const input = $('#input');
-    const output = $('#output');
-
-
-    function recalc(){
-      const mode = $$('input[name="mode"]').find(r=>r.checked).value;
-      const keepCase = $('#keepCase').checked;
-      const forceUpper = $('#autoUpper').checked;
-      output.value = transform(input.value, mode, keepCase, forceUpper);
-    }
-
-
-    ['input','change','keyup'].forEach(ev=> input.addEventListener(ev, recalc));
-    $$('.switch input').forEach(el => el.addEventListener('change', recalc));
-
-
-    $('#clear').addEventListener('click', ()=>{ input.value=''; output.value=''; input.focus(); });
-    $('#copyOut').addEventListener('click', ()=>{ navigator.clipboard.writeText(output.value || '').then(()=>{
-      flash('#copyOut');
-    });});
-    $('#copyTable').addEventListener('click', ()=>{
-      const rows = Array.from(document.querySelectorAll('#mapTable tbody tr'))
-        .map(tr => Array.from(tr.children).map(td=>td.textContent).join('\t')).join('\n');
-      navigator.clipboard.writeText(rows).then(()=> flash('#copyTable'));
-    });
-
-
-    function flash(sel){
-      const el = $(sel); const old = el.textContent; el.textContent = 'Copied!';
-      setTimeout(()=>{ el.textContent = old; }, 900);
-    }
-
-
-    // Build mapping table programmatically (A..Z)
-    const tbody = document.querySelector('#mapTable tbody');
-    for(let i=0;i<26;i++){
-      const A = String.fromCharCode(65 + i);
-      const atbashCode = atbashChar(65 + i, true);
-      const afterShift = caesarChar(atbashCode, true, -19);
-      const atbashCh = String.fromCharCode(atbashCode);
-      const finalCh = String.fromCharCode(afterShift);
-      const tr = document.createElement('tr');
-      tr.innerHTML = `<td>${A}</td><td>${atbashCh}</td><td>${finalCh}</td><td><strong>${finalCh}</strong></td>`;
-      tbody.appendChild(tr);
-    }
-
-
-    // Prefill a helpful example
-    input.value = 'RPGEZY TYAGU';
-    $$('input[name="mode"]').find(r=>r.value==='decode').checked = true;
-    recalc();
-  </script>
+  <script>
+    function atbashChar(code, isUpper){
+      const base = isUpper ? 65 : 97;
+      return base + (25 - (code - base));
+    }
+    function caesarChar(code, isUpper, shift){
+      const base = isUpper ? 65 : 97;
+      return base + (((code - base + shift) % 26 + 26) % 26);
+    }
+    function transform(text, mode){
+      const stepEncode = (ch) => {
+        const code = ch.charCodeAt(0);
+        const isUpper = ch >= 'A' && ch <= 'Z';
+        const isLower = ch >= 'a' && ch <= 'z';
+        if(!isUpper && !isLower) return ch;
+        const up = isUpper || (!isUpper && !isLower);
+        const afterAtbash = atbashChar(code, isUpper);
+        const afterShift = caesarChar(afterAtbash, isUpper, -19);
+        return String.fromCharCode(afterShift);
+      };
+      const stepDecode = (ch) => {
+        const code = ch.charCodeAt(0);
+        const isUpper = ch >= 'A' && ch <= 'Z';
+        const isLower = ch >= 'a' && ch <= 'z';
+        if(!isUpper && !isLower) return ch;
+        const afterShift = caesarChar(code, isUpper, +19);
+        const afterAtbash = atbashChar(afterShift, isUpper);
+        return String.fromCharCode(afterAtbash);
+      };
+      const fn = mode === 'decode' ? stepDecode : stepEncode;
+      return Array.from(text).map(fn).join('');
+    }
+    function run(mode){
+      const inp = document.getElementById('input').value;
+      document.getElementById('output').value = transform(inp, mode);
+    }
+  </script>
 </body>
 </html>
-
