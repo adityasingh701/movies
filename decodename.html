@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secret Encoder & Decoder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #141E30, #243B55);
+      color: #fff;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 {
+      color: #ffcc00;
+      margin-bottom: 10px;
+    }
+    textarea {
+      width: 80%;
+      height: 100px;
+      margin: 15px 0;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+      outline: none;
+    }
+    button {
+      background: #ffcc00;
+      color: #000;
+      border: none;
+      padding: 12px 20px;
+      margin: 5px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #ffaa00;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      background: #222;
+      padding: 15px;
+      border-radius: 10px;
+      display: inline-block;
+      width: 80%;
+      word-wrap: break-word;
+    }
+    footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🔐 Secret Encoder & Decoder</h1>
+  <p>Enter your text below and choose an option:</p>
+  
+  <textarea id="inputText" placeholder="Type your message..."></textarea><br>
+  
+  <button onclick="encodeText()">Encode</button>
+  <button onclick="decodeText()">Decode</button>
+  
+  <div id="result">👉 Result will appear here</div>
+  
+  <footer>
+    ✨ Powered by <b>CineHall</b> ✨
+  </footer>
+
+  <script>
+    const mapping = {
+      'A':'S','B':'T','C':'K','D':'A','E':'B','F':'P','G':'R','H':'O',
+      'I':'G','J':'L','K':'M','L':'J','M':'H','N':'N','O':'I','P':'Q',
+      'Q':'E','R':'D','S':'Y','T':'C','U':'U','V':'Z','W':'F','X':'W',
+      'Y':'X','Z':'V'
+    };
+
+    const reverseMapping = {};
+    for (let key in mapping) {
+      reverseMapping[mapping[key]] = key;
+    }
+
+    function encodeText() {
+      let text = document.getElementById("inputText").value.toUpperCase();
+      let result = "";
+      for (let char of text) {
+        result += mapping[char] || char;
+      }
+      document.getElementById("result").innerText = result;
+    }
+
+    function decodeText() {
+      let text = document.getElementById("inputText").value.toUpperCase();
+      let result = "";
+      for (let char of text) {
+        result += reverseMapping[char] || char;
+      }
+      document.getElementById("result").innerText = result;
+    }
+  </script>
+
+</body>
+</html>
